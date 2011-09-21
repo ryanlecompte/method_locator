@@ -13,14 +13,10 @@ module MethodLocator
   end
 
   def method_lookup_path
-    module_or_regular_object? ? nonclass_lookup_path : class_lookup_path
+    is_a?(Class) ? class_lookup_path : nonclass_lookup_path
   end
 
   private
-
-  def module_or_regular_object?
-    self.class == Module || !is_a?(Class)
-  end
 
   def nonclass_lookup_path
     self.class.ancestors.unshift(singleton_class)

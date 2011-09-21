@@ -17,7 +17,7 @@ module MethodLocator
     insert_modules_into(lookup_path)
   end
 
-  def class_only_ancestors
+  def only_class_ancestors
     ancestors.grep(Class)
   end
 
@@ -28,11 +28,11 @@ module MethodLocator
   end
 
   def nonclass_lookup_path
-    self.class.class_only_ancestors.unshift(singleton_class)
+    self.class.only_class_ancestors.unshift(singleton_class)
   end
 
   def class_lookup_path
-    class_only_ancestors.map(&:singleton_class) + Class.class_only_ancestors
+    only_class_ancestors.map(&:singleton_class) + Class.only_class_ancestors
   end
 
   def insert_modules_into(lookup_path)

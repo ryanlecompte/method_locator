@@ -13,26 +13,34 @@ module MethodLocator
   end
 
   def method_lookup_path
-    is_a?(Class) ? class_lookup_path : nonclass_lookup_path
+    lookup_path = is_a?(Class) ? class_lookup_path : nonclass_lookup_path
+    insert_modules_into(lookup_path)
+  end
+
+  def class_only_ancestors
+    ancestors.grep(Class)
   end
 
   private
 
+  def instance_methods_for(clazz)
+    clazz.instance_methods(false) + clazz.private_instance_methods(false)
+  end
+
   def nonclass_lookup_path
-    self.class.ancestors.unshift(singleton_class)
+    self.class.class_only_ancestors.unshift(singleton_class)
   end
 
   def class_lookup_path
-    lookup_path = ancestors.grep(Class).map(&:singleton_class) + Class.ancestors
+    class_only_ancestors.map(&:singleton_class) + Class.class_only_ancestors
+  end
+
+  def insert_modules_into(lookup_path)
     # reverse is used here since included_modules contains all modules defined in
     # the current class as well as in its ancestors.
     lookup_path.reverse.map do |clazz|
-      [clazz.included_modules, clazz]
+      [clazz.included_modules.reverse, clazz]
     end.flatten.uniq.reverse
-  end
-
-  def instance_methods_for(clazz)
-    clazz.instance_methods(false) + clazz.private_instance_methods(false)
   end
 end
 

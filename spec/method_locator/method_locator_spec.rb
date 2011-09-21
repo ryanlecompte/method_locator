@@ -6,11 +6,13 @@ describe MethodLocator do
   describe "#methods_for" do
     it "returns proper methods for regular object instances" do
       instance = B.new
+      instance.extend(M5)
 
       def instance.foo
       end
 
       instance.methods_for(:foo).map(&:owner).should == [instance.singleton_class,
+                                                         M5,
                                                          B,
                                                          M2,
                                                          M1,
@@ -29,7 +31,10 @@ describe MethodLocator do
   describe "#method_lookup_path" do
     it "returns proper path for regular object instances" do
       instance = B.new
+      instance.extend(M5)
+
       method_lookup_path_for(instance).should == [instance.singleton_class,
+                                                  M5,
                                                   B,
                                                   M2,
                                                   M1,
@@ -65,7 +70,7 @@ describe MethodLocator do
   end
 
   def method_lookup_path_for(obj)
-    allowed_items = [obj, M1, M2, M3, M4, A, B, Class, Module, Object, MethodLocator, Kernel, BasicObject]
+    allowed_items = [obj, M1, M2, M3, M4, M5, A, B, Class, Module, Object, MethodLocator, Kernel, BasicObject]
     allowed_items = allowed_items + allowed_items.map(&:singleton_class)
     obj.method_lookup_path.keep_if { |c| allowed_items.include?(c) }
   end
@@ -89,6 +94,11 @@ end
 
 module M4
   def self.hello
+  end
+end
+
+module M5
+  def foo
   end
 end
 

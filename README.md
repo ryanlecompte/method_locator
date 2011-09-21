@@ -3,7 +3,10 @@
 Method Locator is a Ruby gem that allows you to easily determine the method lookup path of a particular
 object / class / module, as well as find all places (represented as UnboundMethod instances) where
 a callable method is defined on an object. This is very useful in an environment such as Rails where
-you are unsure where a method may be defined or overridden.
+you are unsure where a method may be defined or overridden. Note that by default, Ruby tends to hide
+singleton classes when you invoke Class#ancestors. The new Object#method_lookup_path does not hide
+these singleton classes and will return them, so that you get a true representation of how Ruby
+performs lookups for methods.
 
 ## Installation
 

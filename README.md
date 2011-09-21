@@ -8,6 +8,9 @@ singleton classes when you invoke Module#ancestors. The new Object#method_lookup
 these singleton classes and will return them, so that you get a true representation of how Ruby
 performs lookups for methods.
 
+This library will make more sense if you understand Ruby's object model and method lookup path.
+A great explanation of this can be found in the following article by Andrea Singh: [Ruby's Eigenclasses Demystified](http://blog.madebydna.com/all/code/2011/06/24/eigenclasses-demystified.html)
+
 ## Installation
 
 Method Locator is available as a RubyGem:

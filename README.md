@@ -17,6 +17,8 @@ Method Locator is available as a RubyGem:
 ## Examples
 
 ```ruby
+require 'method_locator'
+
 module M1
   def foo
     puts "foo from M1"

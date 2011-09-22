@@ -3,7 +3,6 @@ require "method_locator/version"
 # MethodLocator finds all method definitions in an object instance, class, or
 # module ancestor chain. This code will make more sense if you understand Ruby's
 # object model and method lookup path. See README for more information.
-
 module MethodLocator
   def methods_for(meth)
     method_lookup_path.each_with_object([]) do |clazz, matches|

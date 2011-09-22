@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Ryan LeCompte"]
   s.email       = ["lecompte@gmail.com"]
   s.homepage    = "http://github.com/ryanlecompte/method_locator"
-  s.summary     = %q{Method Locator provides a way to traverse an object's method lookup path to find all places where a method may be defined.}
-  s.description = %q{Method Locator provides a way to traverse an object's method lookup path to find all places where a method may be defined.}
+  s.summary     = %q{method_locator provides a way to traverse an object's method lookup path to find all places where a method may be defined.}
+  s.description = %q{method_locator provides a way to traverse an object's method lookup path to find all places where a method may be defined.}
 
   s.rubyforge_project = "method_locator"
 

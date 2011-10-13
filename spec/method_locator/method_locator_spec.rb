@@ -26,6 +26,10 @@ describe MethodLocator do
     it "returns proper methods for modules" do
       M4.methods_for(:hello).map(&:owner).should == [M4.singleton_class]
     end
+
+    it "returns proper methods for objects without a singleton class" do
+      5.methods_for(:+).should == [Fixnum.instance_method(:+)]
+    end
   end
 
   describe "#method_lookup_path" do
@@ -66,6 +70,10 @@ describe MethodLocator do
                                             MethodLocator,
                                             Kernel,
                                             BasicObject]
+    end
+
+    it "returns proper path for objects without a singleton class" do
+      5.method_lookup_path.should == 5.class.ancestors
     end
   end
 

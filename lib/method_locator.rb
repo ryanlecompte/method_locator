@@ -26,7 +26,9 @@ module MethodLocator
   end
 
   def nonclass_lookup_path
-    self.class.only_class_ancestors.unshift(singleton_class)
+    # not only non-classes have singleton classes, for example integers
+    sclass = singleton_class rescue nil
+    self.class.only_class_ancestors.unshift(sclass).compact
   end
 
   def class_lookup_path

@@ -26,8 +26,7 @@ module MethodLocator
   end
 
   def nonclass_lookup_path
-    # not all non-classes have singleton classes, for example integers
-    sclass = singleton_class rescue nil
+    sclass = fetch_singleton_class
     self.class.only_class_ancestors.unshift(sclass).compact
   end
 
@@ -41,6 +40,13 @@ module MethodLocator
     lookup_path.reverse.map do |clazz|
       [clazz.included_modules.reverse, clazz]
     end.flatten.uniq.reverse
+  end
+
+  def fetch_singleton_class
+    # not all non-classes have singleton classes, e.g., instances of Fixnum
+    singleton_class
+  rescue TypeError
+    nil
   end
 end
 
